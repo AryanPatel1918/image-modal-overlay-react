@@ -20,7 +20,7 @@ export default function App() {
         <div style={{ width: "400px", height: "250px", position: "relative" }}>
             {apodData ? ( 
                 <>
-                    <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src="https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D" />
+                    <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={apodData.hdurl} />
                     <div style={{ position: "absolute", bottom: 8, left: 10, color: "white", display: "flex", flexDirection: "column", gap: "2px" }}>
                         <p style={{ margin: 0, fontSize: "13px", overflowWrap: "break-word" }}>NASA | Astronomy Picture of the Day | {apodData.date}</p>
                         <h1 style={{ margin: 0, fontSize: "19px", overflowWrap: "break-word" }}>{apodData.title}</h1>
@@ -43,7 +43,7 @@ export default function App() {
                             onMouseEnter={e => e.currentTarget.style.opacity = 0.8}
                             onMouseLeave={e => e.currentTarget.style.opacity = 1}
                             title="Info"
-                            style={{ position: "absolute", bottom: 10, right: 10, border: "none", width: "25px", height: "25px", cursor: "pointer", padding: "2px" , backgroundColor: "white", borderRadius: "50%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "15px", fontWeight: "bold" }}
+                            style={{ position: "absolute", bottom: 10, right: 10, border: "none", width: "23px", height: "23px", cursor: "pointer", padding: "2px" , backgroundColor: "white", borderRadius: "50%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "15px", fontWeight: "bold" }}
                         >
                             i
                         </button>
