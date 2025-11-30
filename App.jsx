@@ -1,23 +1,37 @@
 import { useState, useEffect } from "react"
 export default function App() {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [apodData, setApodData] = useState(null)
+    const [error, setError] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
 
     useEffect(() => {
-        setLoading(true)
-        const url = "https://api.nasa.gov/planetary/apod?api_key="
         const NASA_API_KEY = "Nc4u3rKeDSGDu6oTRcpkb9JwjUAGLGddaSc3LdXs"
-        fetch(url + NASA_API_KEY)
-            .then(res => res.json())
-            .then(data => {
+        const url = `https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`
+        async function fetchData() {
+            try {
+                const res = await fetch(url)
+                if (!res.ok) {
+                    throw new Error("HTTP request failed")
+                }
+                const data = await res.json()
                 setApodData(data)
+            } catch (err) {
+                setError(`Error: ${err.message}`)
+            } finally {
                 setLoading(false)
-            })
+            }
+        }
+        fetchData()
     }, [])
     
     return (
         <div style={{ width: "400px", height: "250px", position: "relative" }}>
+            {loading && (
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "black",  display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <h3 style={{ color: "white", margin: 0, fontWeight: "500" }}>Loading...</h3>
+                </div>
+            )}            
             {apodData ? ( 
                 <>
                     <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={apodData.hdurl} />
@@ -51,7 +65,7 @@ export default function App() {
                 </>
             ) : (
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "black",  display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <h3 style={{ color: "white", margin: 0, fontWeight: "500" }}>Loading...</h3>
+                    <h3 style={{ color: "white", margin: 0, fontWeight: "500" }}>{error}</h3>
                 </div>
             )}
         </div>
