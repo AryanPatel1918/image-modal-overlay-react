@@ -17,7 +17,7 @@ export default function App() {
                 const data = await res.json()
                 setApodData(data)
             } catch (err) {
-                setError(`Error: ${err.message}`)
+                setError(err)
             } finally {
                 setLoading(false)
             }
@@ -34,7 +34,7 @@ export default function App() {
             )}            
             {apodData ? ( 
                 <>
-                    <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={apodData.hdurl} />
+                    <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={apodData.hdurl || apodData.url} />
                     <div style={{ position: "absolute", bottom: 8, left: 10, color: "white", display: "flex", flexDirection: "column", gap: "2px" }}>
                         <p style={{ margin: 0, fontSize: "13px", overflowWrap: "break-word" }}>NASA | Astronomy Picture of the Day | {apodData.date}</p>
                         <h1 style={{ margin: 0, fontSize: "19px", overflowWrap: "break-word" }}>{apodData.title}</h1>
@@ -65,7 +65,7 @@ export default function App() {
                 </>
             ) : (
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "black",  display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <h3 style={{ color: "white", margin: 0, fontWeight: "500" }}>{error}</h3>
+                    <h3 style={{ color: "white", margin: 0, fontWeight: "500" }}>{error?.name}: {error?.message}</h3>
                 </div>
             )}
         </div>
